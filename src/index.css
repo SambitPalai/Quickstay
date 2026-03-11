@@ -1,0 +1,327 @@
+body {
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+.card {
+  opacity: 0.9;
+}
+
+/* Navigation bar definitions */
+ .navbar{
+  padding: 0;
+ }
+ .navbar .navbar-nav .nav-link{
+  padding: 1em;
+ }
+ .navbar .navbar-nav .nav-item{
+  position: relative;
+ }
+
+ .navbar .navbar-nav .nav-item::after{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '';
+  background-color:rgb(169, 77, 123) ;
+  width: 0;
+  margin: 0 auto;
+  height: 4px;
+  transition: all .5s;
+ }
+ .navbar .navbar-nav .nav-item:hover::after{
+  width: 100%;
+ }
+ .navbar-dark .navbar-nav .nav-link {
+  color: rgb(25, 24, 24);
+}
+
+.navbar-dark .navbar-brand {
+  color: rgb(25, 24, 24);
+}
+
+ @media screen and (min-width: 992px){
+  .navbar{
+  padding: 0;
+ }
+ .navbar .navbar-nav .nav-link{
+  padding: 1em 0;
+ }
+ .navbar .navbar-nav .nav-item{
+  margin: 0 1em;
+ }
+ }
+
+  /* Hotel custom color */
+ .btn-hotel{
+  background-color: rgb(169, 77, 123);
+  color: #fff;
+  }
+  .btn-hotel:hover{
+  background-color: rgb(137, 127, 132);
+  color: #fff;
+  transition: 0.7s;
+  outline-color: transparent;
+  outline-style:solid;
+
+  }
+
+  .hotel-color{
+    color: rgb(169, 77, 123);
+  }
+  .room-price{
+    color:darkgoldenrod;
+    font-family: 'Courier New', Courier, monospace;
+    font-size:medium;
+  }
+  .room-card{
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  .room-card-body{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 16px 20px;
+  }
+  .room-card-media{
+    flex: 0 0 auto;
+  }
+  .room-card-image-link{
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .room-card-img{
+    width: 150px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  .room-card-content{
+    flex: 1 1 260px;
+  }
+  .room-card-action{
+    margin-left: auto;
+  }
+  .vertical-rule{
+    border-left: '0.5px solid black';
+    height: '100vh'
+  }
+
+
+
+.parallax {
+  background-image: url("./assets/images/parallex.webp");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50vh;
+}
+
+.header {
+  position: relative;
+  height: 150px;
+  background-size: cover;
+  background-image: url("./assets/images/images.jpg");
+  background-position: center center;
+}
+.header-title {
+  color: #fff;
+  font-size: 4rem;
+  align-content: center;
+}
+
+.parallax {
+  margin-top: 50px;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+.animated {
+  animation-duration: 1s;
+}
+
+.animated-texts h1 {
+  animation: fadeInDown 1s ease-in-out;
+}
+
+.animated-texts p, h1, h2 {
+  animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 60% {
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0,-4px,0);
+  }
+}
+
+.bounceIn {
+  animation-name: bounceIn;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Header overlay */
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+     transform: translate(-50%, -50%);
+    color: #fff;
+    justify-content: flex-start;
+  }
+
+/* The header banner */
+.header-banner {
+  background-image:  url("./assets/images/hbg1.jpg");
+   background-size: cover;
+  background-position: center;
+   position: relative;
+  height: 80vh;
+ }
+
+@media only screen and (max-width: 768px) {
+  .header-banner h1 {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header-banner h1 {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .room-card-body{
+    padding: 14px 16px;
+  }
+  .room-card-img{
+    width: 100%;
+    height: 180px;
+  }
+  .room-card-action{
+    width: 100%;
+    margin-left: 0;
+  }
+  .room-card-action .btn{
+    width: 100%;
+  }
+}
+
+.booking-card{
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+.booking-card .card-title{
+  font-weight: 600;
+  color: #4a4a4a;
+}
+.booking-card .form-label{
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+.booking-card .form-control{
+  border-radius: 6px;
+}
+.booking-fieldset{
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px 14px 8px;
+  margin-bottom: 14px;
+}
+.booking-legend{
+  float: none;
+  width: auto;
+  padding: 0 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6c757d;
+}
+.summary-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.summary-list li{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  color: #444;
+}
+.summary-label{
+  color: #6c757d;
+}
+.section-title{
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  margin-bottom: 8px;
+}
+.summary-total{
+  border-top: 1px solid #e9ecef;
+  padding-top: 10px;
+  margin-top: 10px;
+  font-size: 1.05rem;
+}
+
+ .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+  height: 60px;
+  text-align: center;
+}
