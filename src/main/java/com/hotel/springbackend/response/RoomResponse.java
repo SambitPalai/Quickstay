@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Base64;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +16,7 @@ public class RoomResponse {
 	private Long id;
 	private String roomType;
 	private BigDecimal roomPrice;
+	@JsonProperty("isBooked")   
 	private boolean isBooked =false;
 	private String photo;
 	private List<BookingResponse>bookings;
@@ -31,7 +34,7 @@ public class RoomResponse {
 		this.roomPrice = roomPrice;
 		this.isBooked = isBooked;
 		this.photo = photoBytes != null ? Base64.getEncoder().encodeToString(photoBytes) : null ;
-		// this.bookings = bookings;
+		this.bookings = bookings;
 	}
 	
 	

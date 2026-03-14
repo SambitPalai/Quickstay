@@ -11,5 +11,7 @@ public interface BookingRepository extends JpaRepository<BookedRoom, Long>{
 	List<BookedRoom> findByRoomId(Long roomId);
 
 	BookedRoom findByBookingConfirmationCode(String confirmationCode);
+	
+	List<BookedRoom> findByGuestEmail(String guestEmail);
 
 }

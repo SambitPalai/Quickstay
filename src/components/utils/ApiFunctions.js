@@ -4,6 +4,40 @@ export const api = axios.create({
     baseURL :"https://localhost:9192"
 })
 
+// ------------ Attach JWT token to every request automatically ------------
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+})
+
+// --------Auth Functions -------------
+
+/* Register a new user */
+export async function registerUser(userData) {
+    try {
+        const response = await api.post("/auth/register", userData)
+        return response.data
+    } catch (error) {
+        throw new Error(error.response?.data || "Registration failed")
+    }
+}
+
+/* Login an existing user */
+export async function loginUser(credentials) {
+    try {
+        const response = await api.post("/auth/login", credentials)
+        return response.data   // { token, email, role, name }
+    } catch (error) {
+        throw new Error(error.response?.data || "Login failed")
+    }
+}
+
+// ------- Room Functions -------------------- 
+
 /* This function adds a new room to the database  */
 export async function addRoom(photo, roomType, roomPrice) {
 
@@ -75,6 +109,8 @@ export async function getRoomById(roomId) {
     }
 }
 
+// ----- Booking Functions -------------------  
+
 /* This function saves a new booking in the database */
 export async function bookRoom(roomId, booking) {
     try {
@@ -129,3 +165,24 @@ export async function cancelBooking(bookingId){
     }
 }
 
+/* Get logged-in user's own bookings — no email in URL */
+export async function getMyBookings() {
+    try {
+        const result = await api.get("/bookings/my-bookings")
+        return result.data
+    } catch (error) {
+        throw new Error(`Error fetching your bookings: ${error.message}`)
+    }
+}
+
+/* Admin only — get bookings for any user by email */
+export async function getUserBookingsByEmail(email) {
+    try {
+        const result = await api.get("/bookings/user", {
+            params: { email }    // sends as ?email=user@quickstay.com
+        })
+        return result.data
+    } catch (error) {
+        throw new Error(`Error fetching bookings: ${error.message}`)
+    }
+}

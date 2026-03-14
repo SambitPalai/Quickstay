@@ -10,30 +10,82 @@ import Footer from "./components/layout/Footer.jsx"
 import Checkout from "./components/booking/Checkout.jsx"
 import BookingSuccess from "./components/booking/BookingSuccess.jsx"
 import Signup from "./components/auth/Signup.jsx"
-
+import Login from "./components/auth/Login.jsx"
+import Unauthorized from "./components/common/Unauthorized.jsx"
+import { AuthProvider } from "./components/auth/AuthContext.jsx"
+import ProtectedRoute from "./components/auth/ProtectedRoute.jsx"
+import ManageBookings  from "./components/admin/ManageBookings.jsx"
+import UserProfile     from "./components/user/UserProfile.jsx"
+import FindBooking     from "./components/booking/FindBooking.jsx"
 
 function App() {
+  return (
+    <AuthProvider>
+      <>
+        <main>
+          <Router>
+            <NavBar />
+            <Routes>
 
-  return ( 
-  <>
-  <main>
-    <Router>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/edit-room/:roomId" element={<EditRoom/>} />
-        <Route path="/existing-rooms" element={<ExistingRooms/>} />
-        <Route path="/add-room" element={<AddRoom/>} />
-        <Route path="/book-room/:roomId" element={<Checkout />} />
-        <Route path="/booking-success" element={<BookingSuccess />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/browse-all-rooms" element={<RoomListing/>} />
-        <Route path="/admin" element={<Admin/>} />
-      </Routes>
-    </Router>
-    <Footer />   
-  </main>
-  </>
-)}
+              {/* ----- Public routes ---------------------------------- */}
+              <Route path="/"                 element={<Home />} />
+              <Route path="/login"            element={<Login />} />
+              <Route path="/signup"           element={<Signup />} />
+              <Route path="/browse-all-rooms" element={<RoomListing />} />
+              <Route path="/unauthorized"     element={<Unauthorized />} />
+              <Route path="/find-booking"     element={<FindBooking />} />
+
+              {/* ----User routes (must be logged in) ------------------- */}
+              <Route path="/book-room/:roomId" element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              }/>
+              <Route path="/booking-success" element={
+                <ProtectedRoute>
+                  <BookingSuccess />
+                </ProtectedRoute>
+              }/>
+               <Route path="/profile" element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }/>
+
+              {/* ----- Admin only routes ----------------------- */}
+              <Route path="/admin" element={
+                <ProtectedRoute adminOnly>
+                  <Admin />
+                </ProtectedRoute>
+              }/>
+               <Route path="/admin/bookings" element={
+                <ProtectedRoute adminOnly>
+                  <ManageBookings />
+                </ProtectedRoute>
+              }/>
+              <Route path="/existing-rooms" element={
+                <ProtectedRoute adminOnly>
+                  <ExistingRooms />
+                </ProtectedRoute>
+              }/>
+              <Route path="/add-room" element={
+                <ProtectedRoute adminOnly>
+                  <AddRoom />
+                </ProtectedRoute>
+              }/>
+              <Route path="/edit-room/:roomId" element={
+                <ProtectedRoute adminOnly>
+                  <EditRoom />
+                </ProtectedRoute>
+              }/>
+
+            </Routes>
+          </Router>
+          <Footer />
+        </main>
+      </>
+    </AuthProvider>
+  )
+}
 
 export default App

@@ -2,6 +2,8 @@ package com.hotel.springbackend.response;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,9 @@ import lombok.NoArgsConstructor;
 public class BookingResponse {
 
 	private Long bookingId;
+	@JsonFormat(pattern = "dd-MM-yyyy")  
 	private LocalDate checkInDate;
+	@JsonFormat(pattern = "dd-MM-yyyy")  
 	private LocalDate checkOutDate;
 	private String guestFullName;
 	private String guestEmail;

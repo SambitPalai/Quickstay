@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
-import { Form, FormControl, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import Header from '../common/Header'
+import { useState } from "react"
+import { Form, FormControl, Button } from "react-bootstrap"
+import { Link, useNavigate } from "react-router-dom"
+import { registerUser } from "../utils/ApiFunctions"
+import { useAuth } from "./AuthContext"
+import Header from "../common/Header"
 
 const Signup = () => {
     const [form, setForm] = useState({
-        fullName: "",
+        name: "",
         email: "",
         password: "",
         confirmPassword: ""
     })
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage,   setErrorMessage]   = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    const [isLoading,      setIsLoading]      = useState(false)
+
+    const { login } = useAuth()
+    const navigate  = useNavigate()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -20,23 +26,38 @@ const Signup = () => {
         setSuccessMessage("")
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMessage("")
         setSuccessMessage("")
+
         if (form.password !== form.confirmPassword) {
             setErrorMessage("Passwords do not match")
             return
         }
-        setSuccessMessage("Sign up successful. You can now log in.")
+
+        setIsLoading(true)
+        try {
+            const userData = await registerUser({
+                name:     form.name,
+                email:    form.email,
+                password: form.password
+            })
+            login(userData)             // auto-login after registration
+            setSuccessMessage("Registration successful! Redirecting...")
+            setTimeout(() => navigate("/"), 1500)
+        } catch (error) {
+            setErrorMessage(error.message)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
-        <>
         <div className="container mt-5 mb-5">
             <Header title="Sign Up" />
             <div className="row justify-content-center mt-4">
-                <div className="col-12 col-sm-10 col-md-8 col-lg-6">
+                <div className="col-12 col-sm-10 col-md-8 col-lg-5">
                     {errorMessage && (
                         <div className="alert alert-danger fade show" role="alert">
                             {errorMessage}
@@ -49,13 +70,13 @@ const Signup = () => {
                     )}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3">
-                            <Form.Label htmlFor="fullName">Full Name</Form.Label>
+                            <Form.Label htmlFor="name">Full Name</Form.Label>
                             <FormControl
                                 required
                                 type="text"
-                                id="fullName"
-                                name="fullName"
-                                value={form.fullName}
+                                id="name"
+                                name="name"
+                                value={form.name}
                                 placeholder="Enter your full name"
                                 onChange={handleChange}
                             />
@@ -97,8 +118,8 @@ const Signup = () => {
                             />
                         </Form.Group>
                         <div className="d-flex align-items-center justify-content-between">
-                            <Button type="submit" className="btn btn-hotel">
-                                Sign Up
+                            <Button type="submit" className="btn btn-hotel" disabled={isLoading}>
+                                {isLoading ? "Signing up..." : "Sign Up"}
                             </Button>
                             <Link to="/login" className="text-decoration-none">
                                 Already have an account? Log in
@@ -108,7 +129,6 @@ const Signup = () => {
                 </div>
             </div>
         </div>
-        </>
     )
 }
 
