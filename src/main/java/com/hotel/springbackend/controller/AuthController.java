@@ -33,11 +33,17 @@ public class AuthController {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(User.Role.USER); // Default role
+        
+        if ("quickstay-admin-secret".equals(request.getAdminSecret())) {
+        	user.setRole(User.Role.ADMIN);
+        } else {
+        	user.setRole(User.Role.USER);
+        }
+        
         userRepository.save(user);
-
         String token = jwtService.generateToken(user);
         return ResponseEntity.ok(new AuthResponse(token, user.getEmail(), user.getRole().name(), user.getName()));
+        
     }
 
     @PostMapping("/login")

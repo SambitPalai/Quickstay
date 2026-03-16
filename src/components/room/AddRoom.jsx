@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 const AddRoom = () => {
     const[newRoom, setNewRoom] = useState ({
+        roomNo   : "",
         photo : null,
         roomType : "",
         roomPrice : ""
@@ -85,6 +86,20 @@ const AddRoom = () => {
                         </div>
                     )}
                     <form className="add-room-form__body" onSubmit={handleSubmit}>
+
+                        <div className="mb-3">
+                            <label htmlFor="roomNo" className="form-label">Room Number</label>
+                            <input
+                                className="form-control"
+                                required
+                                id="roomNo"
+                                type="text"
+                                name="roomNo"
+                                placeholder="e.g. A-101, B-123"
+                                value={newRoom.roomNo}
+                                onChange={handleRoomInputChange}
+                            />
+                        </div>
 
                         <div className= "mb-3">
                             <label htmlFor= "roomType" className= "form-label">Room Type</label>

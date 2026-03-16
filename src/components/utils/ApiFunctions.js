@@ -39,13 +39,13 @@ export async function loginUser(credentials) {
 // ------- Room Functions -------------------- 
 
 /* This function adds a new room to the database  */
-export async function addRoom(photo, roomType, roomPrice) {
+export async function addRoom(photo, roomType, roomPrice, roomNo) {
 
     const formData = new FormData()
-    formData.append("photo",photo)
-    formData.append("roomType",roomType)
-    formData.append("roomPrice",roomPrice)
-
+    formData.append("photo", photo)
+    formData.append("roomType", roomType)
+    formData.append("roomPrice", roomPrice)
+    formData.append("roomNo", roomNo)
     await api.post("/rooms/add/new-room", formData)
     return true
 }

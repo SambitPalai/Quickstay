@@ -32,6 +32,9 @@ public class BookedRoom {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bookingId;
 	
+	@Column(name = "room_no")
+	private String roomNo;
+	
 	@Column(name = "check_in")
 	@JsonFormat(pattern = "dd-MM-yyyy")  
 	private LocalDate checkInDate;

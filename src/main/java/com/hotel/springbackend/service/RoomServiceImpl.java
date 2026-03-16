@@ -25,8 +25,9 @@ public class RoomServiceImpl implements IRoomService{
 	private final RoomRepository roomRepository;
 	
 	@Override
-	public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice) throws IOException {
+	public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice, String roomNo) throws IOException {
 		Room room = new Room();
+		room.setRoomNo(roomNo);
 		room.setRoomType(roomType);
 		room.setRoomPrice(roomPrice);
 		if(!file.isEmpty()) {

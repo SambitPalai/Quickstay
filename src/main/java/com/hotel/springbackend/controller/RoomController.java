@@ -43,9 +43,16 @@ public class RoomController  {
 	public ResponseEntity<RoomResponse> addNewRoom(
 			@RequestParam("photo") MultipartFile photo, 
 			@RequestParam("roomType") String roomType, 
-			@RequestParam("roomPrice") BigDecimal roomPrice) throws IOException, SQLException {
-		Room savedRoom = roomService.addNewRoom(photo, roomType, roomPrice);
-		RoomResponse response = new RoomResponse(savedRoom.getId(), savedRoom.getRoomType(), savedRoom.getRoomPrice());
+			@RequestParam("roomPrice") BigDecimal roomPrice,
+			@RequestParam("roomNo") String roomNo) 
+			throws IOException {
+		Room savedRoom = roomService.addNewRoom(photo, roomType, roomPrice, roomNo);
+		RoomResponse response = new RoomResponse(
+				savedRoom.getId(),
+				savedRoom.getRoomNo(),
+				savedRoom.getRoomType(), 
+				savedRoom.getRoomPrice(),
+				false, null, null);
 		return ResponseEntity.ok(response);
 	
 	}
@@ -107,7 +114,7 @@ public class RoomController  {
 				.stream()
 				.map(booking -> new BookingResponse(booking.getBookingId(), booking.getCheckInDate(), booking.getCheckOutDate(), booking.getBookingConfirmationCode())).toList();
 		
-		return new RoomResponse(room.getId(), room.getRoomType(), room.getRoomPrice(), room.isBooked(), room.getPhoto(), bookingInfo);
+		return new RoomResponse(room.getId(), room.getRoomNo(), room.getRoomType(), room.getRoomPrice(), room.isBooked(), room.getPhoto(), bookingInfo);
 	}
 
 	private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {

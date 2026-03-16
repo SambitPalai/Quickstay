@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,8 @@ public class Room {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "room_no", unique = true)
+	private String roomNo;
 	private String roomType;
 	private BigDecimal roomPrice;
 	private boolean isBooked =false;
@@ -53,6 +56,11 @@ public class Room {
 // Generates 10 digit bookingCode ----	
 		String bookingCode= String.format("%010d", random.nextInt(1_000_000_000));
 		booking.setBookingConfirmationCode(bookingCode);
+	}
+
+	public String getRoomNo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

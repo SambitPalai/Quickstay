@@ -127,7 +127,13 @@ public class BookingController {
     private BookingResponse getBookingResponse(BookedRoom booking) {
         Room theRoom = roomService.getRoomById(booking.getRoom().getId()).get();
         RoomResponse room = new RoomResponse(
-                theRoom.getId(), theRoom.getRoomType(), theRoom.getRoomPrice());
+                theRoom.getId(), 
+                theRoom.getRoomNo(),
+                theRoom.getRoomType(), 
+                theRoom.getRoomPrice(),
+                theRoom.isBooked(),
+                theRoom.getPhoto(),
+                null );
         return new BookingResponse(
                 booking.getBookingId(),
                 booking.getCheckInDate(),
@@ -138,6 +144,6 @@ public class BookingController {
                 booking.getNumberOfChildren(),
                 booking.getTotalNumOfGuests(),
                 booking.getBookingConfirmationCode(),
-                room);
+                room );
     }
 }

@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class RoomResponse {
 
 	private Long id;
+	private String roomNo;
 	private String roomType;
-	private BigDecimal roomPrice;
-	@JsonProperty("isBooked")   
-	private boolean isBooked =false;
+	private BigDecimal roomPrice;   
+	private boolean isBooked ;
 	private String photo;
 	private List<BookingResponse>bookings;
 	
@@ -27,14 +27,14 @@ public class RoomResponse {
 		this.roomPrice = roomPrice;
 	}
 
-	public RoomResponse(Long id, String roomType, BigDecimal roomPrice, boolean isBooked, byte[] photoBytes,
+	public RoomResponse(Long id, String roomNo, String roomType, BigDecimal roomPrice, boolean isBooked, byte[] photoBytes,
 			List<BookingResponse> bookings) {
 		this.id = id;
+		this.roomNo = roomNo;
 		this.roomType = roomType;
 		this.roomPrice = roomPrice;
 		this.isBooked = isBooked;
 		this.photo = photoBytes != null ? Base64.getEncoder().encodeToString(photoBytes) : null ;
-		this.bookings = bookings;
 	}
 	
 	

@@ -12,7 +12,7 @@ import com.hotel.springbackend.model.Room;
 
 public interface IRoomService {
 
-	Room addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice) throws IOException;
+	Room addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String roomNo) throws IOException;
 
 	List<String> getAllRoomTypes();
 
