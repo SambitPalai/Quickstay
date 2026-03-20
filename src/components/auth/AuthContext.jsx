@@ -29,12 +29,13 @@ export const AuthProvider = ({ children }) => {
         setUser(null)
     }
 
+    const isOwner    = () => user?.role === "OWNER"
     const isAdmin = () => user?.role === "ADMIN"
     const isUser  = () => user?.role === "USER"
     const isLoggedIn = () => !!user
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isAdmin, isUser, isLoggedIn }}>
+        <AuthContext.Provider value={{ user, login, logout, isOwner, isAdmin, isUser, isLoggedIn }}>
             {children}
         </AuthContext.Provider>
     )

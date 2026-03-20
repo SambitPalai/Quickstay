@@ -97,6 +97,7 @@ const ExistingRooms = () => {
                 <thead>
                     <tr className='text-center'>
                         <th>ID</th>
+                        <th>Room No</th>  
                         <th>Room Type</th>
                         <th>Room Price</th>
                         <th>Actions</th>
@@ -106,6 +107,7 @@ const ExistingRooms = () => {
                     {currentRooms.map((room) => (
                         <tr key={room.id} className='text-center'>
                             <td>{room.id}</td>
+                            <td>{room.roomNo}</td>
                             <td>{room.roomType}</td>
                             <td>{room.roomPrice}</td>
                             <td className="gap-2">

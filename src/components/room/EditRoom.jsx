@@ -15,6 +15,7 @@ const buildPreviewSrc = (photo) => {
 const EditRoom = () => {
    const[room, setRoom] = useState ({
           photo : null,
+          roomNo: "",
           roomType : "",
           roomPrice : ""
       })
@@ -27,6 +28,7 @@ const EditRoom = () => {
       const applyRoomData = (roomData) => {
         setRoom({
             photo: null,
+            roomNo: roomData?.roomNo ?? "",
             roomType: roomData?.roomType ?? "",
             roomPrice: roomData?.roomPrice ?? ""
         })
@@ -72,6 +74,7 @@ const EditRoom = () => {
       setErrorMessage("")
       try {
             const formData = new FormData()
+            formData.append("roomNo", room.roomNo)
             formData.append("roomType", room.roomType)
             formData.append("roomPrice", room.roomPrice)
             if (room.photo instanceof File) {
@@ -108,6 +111,20 @@ const EditRoom = () => {
                         </div>
                     )}
                     <form className="add-room-form__body" onSubmit={handleSubmit}>
+
+                        <div className="mb-3">
+                            <label htmlFor="roomNo" className="form-label">Room Number</label>
+                           <input
+                                className="form-control"
+                                required
+                                id="roomNo"
+                                type="text"
+                                name="roomNo"
+                                placeholder="e.g. A-101, B-123"
+                                value={room.roomNo}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
                         <div className= "mb-3">
                             <label htmlFor= "roomType" className= "form-label">Room Type</label>

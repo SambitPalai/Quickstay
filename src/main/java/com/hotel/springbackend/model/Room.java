@@ -58,11 +58,5 @@ public class Room {
 		booking.setBookingConfirmationCode(bookingCode);
 	}
 
-	public String getRoomNo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 	
 }

@@ -4,7 +4,7 @@ import { useAuth } from "../auth/AuthContext"
 
 const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false)
-    const { isLoggedIn, isAdmin, logout, user } = useAuth()
+    const { isLoggedIn,isOwner , isAdmin, logout, user } = useAuth()
     const navigate = useNavigate()
 
     const handleAccountClick = () => setShowAccount(!showAccount)
@@ -40,12 +40,11 @@ const NavBar = () => {
                             </NavLink>
                         </li>
 
-                        {/* Admin link — only visible to ADMIN */}
-                        {isAdmin() && (
+                        {(isAdmin() || isOwner()) && (
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/admin">
-                                    Admin Panel
-                                </NavLink>
+                                <NavLink className="nav-link" to={isOwner() ? "/owner" : "/admin"}>
+                                    {isOwner() ? "Owner Panel" : "Admin Panel"}
+                            </NavLink>
                             </li>
                         )}
                     </ul>

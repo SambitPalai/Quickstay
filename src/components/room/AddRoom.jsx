@@ -42,15 +42,15 @@ const AddRoom = () => {
         e.preventDefault()
         setSuccessMessage("")
         setErrorMessage("")
-        if (!newRoom.roomType || !newRoom.roomPrice || !newRoom.photo) {
+        if (!newRoom.roomNo || !newRoom.roomType || !newRoom.roomPrice || !newRoom.photo) {
         setErrorMessage("Please fill all required fields.")
         return
         }
         try {
-            const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice)
+            const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice, newRoom.roomNo)
             if(success === true) {
                setSuccessMessage("Room added succefully") 
-               setNewRoom({photo: null, roomType: "", roomPrice: ""})
+               setNewRoom({photo: null, roomNo: "", roomType: "", roomPrice: ""})
                setImagePreview("")
                if (fileInputRef.current) {
                    fileInputRef.current.value = ""
@@ -95,7 +95,7 @@ const AddRoom = () => {
                                 id="roomNo"
                                 type="text"
                                 name="roomNo"
-                                placeholder="e.g. A-101, B-123"
+                                placeholder="e.g. A101, B123"
                                 value={newRoom.roomNo}
                                 onChange={handleRoomInputChange}
                             />

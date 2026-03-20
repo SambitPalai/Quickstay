@@ -60,15 +60,16 @@ public class BookingController {
     
     // --- Admin: get bookings for ANY specific user by email ----------------
     // Uses request param to avoid @ symbol issue in path variable
-    @GetMapping("/user")
+    @GetMapping("/user/bookings")
     public ResponseEntity<?> getBookingsByUserEmail(
             @RequestParam String email,
             @AuthenticationPrincipal UserDetails currentUser) {
 
-        boolean isAdmin = currentUser.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (!isAdmin) {
+        boolean isAdminOrOwner = currentUser.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || 
+                				a.getAuthority().equals("ROLE_OWNER")
+                			);
+        if (!isAdminOrOwner) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Access denied.");
         }

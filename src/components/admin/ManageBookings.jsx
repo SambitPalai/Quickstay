@@ -90,6 +90,7 @@ const ManageBookings = () => {
                                 <th>Check-Out</th>
                                 <th>Adults</th>
                                 <th>Children</th>
+                                <th>Room No.</th>
                                 <th>Room Type</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -113,6 +114,7 @@ const ManageBookings = () => {
                                         <td>{booking.checkOutDate}</td>
                                         <td>{booking.numOfAdults}</td>
                                         <td>{booking.numOfChildren}</td>
+                                        <td>{booking.room?.roomNo}</td>
                                         <td>{booking.room?.roomType}</td>
                                         <td>
                                             <span className={`badge ${

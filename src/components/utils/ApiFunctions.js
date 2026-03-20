@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const api = axios.create({
-    baseURL :"https://localhost:9192"
+    baseURL :"http://localhost:9192"
 })
 
 // ------------ Attach JWT token to every request automatically ------------
@@ -178,7 +178,7 @@ export async function getMyBookings() {
 /* Admin only — get bookings for any user by email */
 export async function getUserBookingsByEmail(email) {
     try {
-        const result = await api.get("/bookings/user", {
+        const result = await api.get("/bookings/user/bookings", {
             params: { email }    // sends as ?email=user@quickstay.com
         })
         return result.data

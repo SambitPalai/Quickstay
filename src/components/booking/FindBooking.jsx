@@ -98,11 +98,11 @@ const FindBooking = () => {
                                     </li>
                                     <li>
                                         <span className="summary-label">Check-In :</span>
-                                        <span>{moment(booking.checkInDate).format("DD MMM YYYY")}</span>
+                                        <span>{moment(booking.checkInDate, "YYYY-MM-DD", true).format("DD MMM YYYY")}</span>
                                     </li>
                                     <li>
                                         <span className="summary-label">Check-Out :</span>
-                                        <span>{moment(booking.checkOutDate).format("DD MMM YYYY")}</span>
+                                        <span>{moment(booking.checkOutDate, "YYYY-MM-DD", true).format("DD MMM YYYY")}</span>
                                     </li>
                                     <li>
                                         <span className="summary-label">Adults :</span>

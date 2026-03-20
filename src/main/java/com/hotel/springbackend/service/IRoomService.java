@@ -12,8 +12,6 @@ import com.hotel.springbackend.model.Room;
 
 public interface IRoomService {
 
-	Room addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String roomNo) throws IOException;
-
 	List<String> getAllRoomTypes();
 
 	byte[] getRoomPhotoByRoomId(Long roomId) throws ResourceNotFoundException;
@@ -22,8 +20,9 @@ public interface IRoomService {
 
 	void deleteRoom(Long roomId);
 
-	Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes);
-
 	Optional<Room> getRoomById(Long roomId);
+	
+	Room addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String roomNo ) throws IOException;
+	Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, String roomNo, byte[] photoBytes);
 
 }

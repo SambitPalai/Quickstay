@@ -17,6 +17,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute.jsx"
 import ManageBookings  from "./components/admin/ManageBookings.jsx"
 import UserProfile     from "./components/user/UserProfile.jsx"
 import FindBooking     from "./components/booking/FindBooking.jsx"
+import OwnerDashboard  from "./components/owner/OwnerDashboard.jsx"
+import ManageAdmins    from "./components/owner/ManageAdmins.jsx"
 
 function App() {
   return (
@@ -78,6 +80,17 @@ function App() {
                   <EditRoom />
                 </ProtectedRoute>
               }/>
+
+              {/* ----- Owner only routes ----------------------- */}
+               <Route path="/owner" element={
+                    <ProtectedRoute ownerOnly>
+                       <OwnerDashboard />
+                    </ProtectedRoute>}/>
+                <Route path="/owner/manage-admins" element={
+                    <ProtectedRoute ownerOnly>
+                        <ManageAdmins />
+                    </ProtectedRoute>
+                }/> 
 
             </Routes>
           </Router>

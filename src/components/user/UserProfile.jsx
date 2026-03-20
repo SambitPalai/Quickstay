@@ -20,7 +20,7 @@ const UserProfile = () => {
         setIsLoading(true)
         try {
             // ---- Now calls dedicated backend endpoint ---------------
-            const data = await getMyBookings(user.email)
+            const data = await getMyBookings()
             setBookings(data)
         } catch (error) {
             setErrorMessage("Could not load your bookings.")
@@ -106,8 +106,8 @@ const UserProfile = () => {
                                 <tr key={booking.bookingId}>
                                     <td>{booking.bookingConfirmationCode}</td>
                                     <td>{booking.room?.roomType}</td>
-                                    <td>{moment(booking.checkInDate).format("DD MMM YYYY")}</td>
-                                    <td>{moment(booking.checkOutDate).format("DD MMM YYYY")}</td>
+                                    <td>{moment(booking.checkInDate, "YYYY-MM-DD", true).format("DD MMM YYYY")}</td>
+                                    <td>{moment(booking.checkOutDate, "YYYY-MM-DD", true).format("DD MMM YYYY")}</td>
                                     <td>{booking.numOfAdults}</td>
                                     <td>{booking.numOfChildren}</td>
                                     <td>

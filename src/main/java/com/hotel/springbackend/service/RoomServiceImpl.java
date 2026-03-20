@@ -25,7 +25,7 @@ public class RoomServiceImpl implements IRoomService{
 	private final RoomRepository roomRepository;
 	
 	@Override
-	public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice, String roomNo) throws IOException {
+	public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice, String roomNo ) throws IOException {
 		Room room = new Room();
 		room.setRoomNo(roomNo);
 		room.setRoomType(roomType);
@@ -65,10 +65,11 @@ public class RoomServiceImpl implements IRoomService{
 	}
 	
 	@Override
-	public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
+	public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, String roomNo, byte[] photoBytes) {
 		Room room = roomRepository.findById(roomId)
 				.orElseThrow(() -> new ResourceNotFoundException("Room not found"));
-		if (roomType != null) room.setRoomType(roomType);
+		if (roomNo != null) room.setRoomNo(roomNo); 
+		if (roomType != null) room.setRoomType(roomType); 
 		if (roomPrice != null) room.setRoomPrice(roomPrice);
 		if (photoBytes != null && photoBytes.length > 0) {
 			room.setPhoto(photoBytes);
@@ -80,5 +81,6 @@ public class RoomServiceImpl implements IRoomService{
 	public Optional<Room> getRoomById(Long roomId) {
 		return roomRepository.findById(roomId);
 	}
+
 
 }

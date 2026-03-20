@@ -47,12 +47,7 @@ public class RoomController  {
 			@RequestParam("roomNo") String roomNo) 
 			throws IOException {
 		Room savedRoom = roomService.addNewRoom(photo, roomType, roomPrice, roomNo);
-		RoomResponse response = new RoomResponse(
-				savedRoom.getId(),
-				savedRoom.getRoomNo(),
-				savedRoom.getRoomType(), 
-				savedRoom.getRoomPrice(),
-				false, null, null);
+		RoomResponse response = getRoomResponse(savedRoom);
 		return ResponseEntity.ok(response);
 	
 	}
@@ -82,6 +77,7 @@ public class RoomController  {
 	@PutMapping("/update/{roomId}")
 	public ResponseEntity<RoomResponse> updateRoom(
 			@PathVariable Long roomId,
+			@RequestParam(required = false) String roomNo,
 			@RequestParam(required = false) String roomType, 
 			@RequestParam(required = false) BigDecimal roomPrice, 
 			@RequestParam(required = false) MultipartFile photo) throws ResourceNotFoundException, IOException {
@@ -89,7 +85,7 @@ public class RoomController  {
 		byte[] photoBytes = photo != null && !photo.isEmpty()?
 				photo.getBytes() : roomService.getRoomPhotoByRoomId(roomId);
 	
-		Room theRoom = roomService.updateRoom(roomId, roomType, roomPrice, photoBytes);
+		Room theRoom = roomService.updateRoom(roomId, roomType, roomPrice, roomNo, photoBytes);
 	    RoomResponse roomResponse = getRoomResponse(theRoom);
 	    return ResponseEntity.ok(roomResponse);
 	}
@@ -112,9 +108,25 @@ public class RoomController  {
 		
 		List<BookingResponse> bookingInfo = bookings
 				.stream()
-				.map(booking -> new BookingResponse(booking.getBookingId(), booking.getCheckInDate(), booking.getCheckOutDate(), booking.getBookingConfirmationCode())).toList();
+				.map(booking -> new BookingResponse(booking.getBookingId(), 
+						booking.getCheckInDate(), 
+						booking.getCheckOutDate(), 
+						booking.getGuestFullName(),        
+	                    booking.getGuestEmail(),           
+	                    booking.getNumberOfAdults(),       
+	                    booking.getNumberOfChildren(),     
+	                    booking.getTotalNumOfGuests(),
+						booking.getBookingConfirmationCode(),
+						null 
+					)).toList();
 		
-		return new RoomResponse(room.getId(), room.getRoomNo(), room.getRoomType(), room.getRoomPrice(), room.isBooked(), room.getPhoto(), bookingInfo);
+		return new RoomResponse(room.getId(), 
+								room.getRoomNo(), 
+								room.getRoomType(), 
+								room.getRoomPrice(), 
+								room.isBooked(), 
+								room.getPhoto(), 
+								bookingInfo);
 	}
 
 	private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {

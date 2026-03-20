@@ -74,8 +74,8 @@ const BookingForm = () => {
     const handleBooking = async () => {
         const bookingPayload = {
             ...booking,
-            checkInDate     : moment(booking.checkInDate).format("DD-MM-YYYY"),
-            checkOutDate    : moment(booking.checkOutDate).format("DD-MM-YYYY"),
+            checkInDate     : moment(booking.checkInDate).format("YYYY-MM-DD"),
+            checkOutDate    : moment(booking.checkOutDate).format("YYYY-MM-DD"),
             numberOfAdults  : parseInt(booking.numberOfAdults, 10),
             numberOfChildren: parseInt(booking.numberOfChildren, 10)
         }

@@ -35,7 +35,7 @@ public class User implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
     
     public enum Role {
-        USER, ADMIN
+        OWNER ,USER, ADMIN
     }
 
     @Override

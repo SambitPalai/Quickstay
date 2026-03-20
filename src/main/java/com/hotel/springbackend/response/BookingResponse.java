@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class BookingResponse {
 
 	private Long bookingId;
-	@JsonFormat(pattern = "dd-MM-yyyy")  
+	@JsonFormat(pattern = "yyyy-MM-dd")  
 	private LocalDate checkInDate;
-	@JsonFormat(pattern = "dd-MM-yyyy")  
+	@JsonFormat(pattern = "yyyy-MM-dd")  
 	private LocalDate checkOutDate;
 	private String guestFullName;
 	private String guestEmail;
@@ -33,8 +33,6 @@ public class BookingResponse {
 		this.checkOutDate = checkOutDate;
 		this.bookingConfirmationCode = bookingConfirmationCode;
 	}
-	
-	
 	
 	
 }

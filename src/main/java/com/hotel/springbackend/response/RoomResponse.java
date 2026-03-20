@@ -16,7 +16,8 @@ public class RoomResponse {
 	private Long id;
 	private String roomNo;
 	private String roomType;
-	private BigDecimal roomPrice;   
+	private BigDecimal roomPrice; 
+	@JsonProperty("isBooked")  
 	private boolean isBooked ;
 	private String photo;
 	private List<BookingResponse>bookings;
@@ -35,7 +36,8 @@ public class RoomResponse {
 		this.roomPrice = roomPrice;
 		this.isBooked = isBooked;
 		this.photo = photoBytes != null ? Base64.getEncoder().encodeToString(photoBytes) : null ;
-	}
+		this.bookings  = bookings;
+		}
 	
 	
 	
