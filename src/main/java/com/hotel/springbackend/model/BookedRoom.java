@@ -36,11 +36,11 @@ public class BookedRoom {
 	private String roomNo;
 	
 	@Column(name = "check_in")
-	@JsonFormat(pattern = "dd-MM-yyyy")  
+	@JsonFormat(pattern = "yyyy-MM-dd")  
 	private LocalDate checkInDate;
 	
 	@Column(name = "check_out")
-	@JsonFormat(pattern = "dd-MM-yyyy")  
+	@JsonFormat(pattern = "yyyy-MM-dd")  
 	private LocalDate checkOutDate;
 	
 	@Column(name = "guest_fullName")

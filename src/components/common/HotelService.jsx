@@ -14,12 +14,13 @@ const HotelService = () => {
             <h4 className='text-center'>
                 Services at <span className='hotel-color'>Quickstay</span>  
                 <span className='gap-2'> <FaClock/> - 24-Hour Front Desk</span>
+                <span className='gap-2'> Customer Care: 555-0147 / 555-0193 / 555-0178</span>
             </h4>
         </Row>
         <hr/>
         <Row xs={1} md={2} lg={3} className='g-4 mt-2'>
             <Col>
-            <Card>
+            <Card className="service-card h-100">
                 <Card.Body>
                     <Card.Title className='hotel-color'>
                         <FaWifi /> Wifi
@@ -29,7 +30,7 @@ const HotelService = () => {
             </Card>
             </Col>
             <Col>
-            <Card>
+            <Card className="service-card h-100">
                 <Card.Body>
                     <Card.Title className='hotel-color'>
                         <FaUtensils /> Breakfast
@@ -39,7 +40,7 @@ const HotelService = () => {
             </Card>
             </Col>
             <Col>
-            <Card>
+            <Card className="service-card h-100">
                 <Card.Body>
                     <Card.Title className='hotel-color'>
                         <FaTshirt /> Laundry
@@ -49,7 +50,7 @@ const HotelService = () => {
             </Card>
             </Col>
             <Col>
-            <Card>
+            <Card className="service-card h-100">
                 <Card.Body>
                     <Card.Title className='hotel-color'>
                         <FaCocktail /> Mini-bar
@@ -59,7 +60,7 @@ const HotelService = () => {
             </Card>
             </Col>
             <Col>
-            <Card>
+            <Card className="service-card h-100">
                 <Card.Body>
                     <Card.Title className='hotel-color'>
                         <FaSnowflake /> Air conditioning
@@ -69,7 +70,7 @@ const HotelService = () => {
             </Card>
             </Col>
             <Col>
-            <Card>
+            <Card className="service-card h-100">
                 <Card.Body>
                     <Card.Title className='hotel-color'>
                         <FaParking /> Parking Area

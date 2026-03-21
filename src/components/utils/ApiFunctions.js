@@ -161,7 +161,15 @@ export async function cancelBooking(bookingId){
         return result.data
     }
     catch(error){
-        throw new Error(`Error cancelling booking : ${error.message}`)
+        const status = error.response?.status
+        if (status === 401) {
+            throw new Error("Login required to cancel booking.")
+        }
+        if (status === 403) {
+            throw new Error("You are not authorized to cancel this booking.")
+        }
+        const message = error.response?.data || error.message
+        throw new Error(`Error cancelling booking: ${message}`)
     }
 }
 

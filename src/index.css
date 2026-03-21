@@ -1,17 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
+
+:root {
+  --color-primary: #1f6f78;
+  --color-primary-strong: #185b62;
+  --color-primary-rgb: 31, 111, 120;
+  --color-accent: #e0a458;
+  --color-bg: #f7f4ef;
+  --color-bg-2: #f1ece4;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f0e8;
+  --color-text: #1e1f22;
+  --color-muted: #6b6560;
+  --color-border: #e6ded3;
+  --color-on-primary: #ffffff;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+  --color-primary: #4fb5b0;
+  --color-primary-strong: #3c9c97;
+  --color-primary-rgb: 79, 181, 176;
+  --color-accent: #f2b26b;
+  --color-bg: #0f1415;
+  --color-bg-2: #121a1c;
+  --color-surface: #171f21;
+  --color-surface-muted: #1e282b;
+  --color-text: #e8e6e3;
+  --color-muted: #b5b0a9;
+  --color-border: #2c3a3e;
+  --color-on-primary: #0f1415;
+}
+
 body {
   min-height: 100vh;
   padding-bottom: 50px;
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-2) 100%);
+  color: var(--color-text);
+  font-family: "Manrope", sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.1px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.2px;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-primary-strong);
+}
+
 .card {
-  opacity: 0.9;
+  opacity: 1;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 /* Navigation bar definitions */
  .navbar{
   padding: 0;
+  background-color: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
  }
  .navbar .navbar-nav .nav-link{
   padding: 1em;
+  color: var(--color-text);
+  font-weight: 500;
  }
  .navbar .navbar-nav .nav-item{
   position: relative;
@@ -23,7 +89,7 @@ body {
   left: 0;
   right: 0;
   content: '';
-  background-color:rgb(169, 77, 123) ;
+  background-color: var(--color-primary);
   width: 0;
   margin: 0 auto;
   height: 4px;
@@ -32,12 +98,17 @@ body {
  .navbar .navbar-nav .nav-item:hover::after{
   width: 100%;
  }
- .navbar-dark .navbar-nav .nav-link {
-  color: rgb(25, 24, 24);
+
+ .navbar .navbar-nav .nav-item.no-underline::after,
+ .navbar .navbar-nav .nav-item.no-underline:hover::after{
+  width: 0;
+ }
+.navbar .navbar-brand {
+  color: var(--color-text);
 }
 
-.navbar-dark .navbar-brand {
-  color: rgb(25, 24, 24);
+.navbar .nav-link.active {
+  color: var(--color-primary);
 }
 
  @media screen and (min-width: 992px){
@@ -52,14 +123,20 @@ body {
  }
  }
 
-  /* Hotel custom color */
+ /* Hotel custom color */
  .btn-hotel{
-  background-color: rgb(169, 77, 123);
-  color: #fff;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: 999px;
+  padding: 10px 18px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 6px 14px rgba(var(--color-primary-rgb), 0.2);
   }
   .btn-hotel:hover{
-  background-color: rgb(137, 127, 132);
-  color: #fff;
+  background-color: var(--color-primary-strong);
+  border-color: var(--color-primary-strong);
+  color: var(--color-on-primary);
   transition: 0.7s;
   outline-color: transparent;
   outline-style:solid;
@@ -67,17 +144,36 @@ body {
   }
 
   .hotel-color{
-    color: rgb(169, 77, 123);
+    color: var(--color-primary);
   }
   .room-price{
-    color:darkgoldenrod;
+    color: var(--color-accent);
     font-family: 'Courier New', Courier, monospace;
     font-size:medium;
   }
   .room-card{
-    border: 1px solid #eee;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .room-card:hover{
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .service-card{
+    height: 100%;
+    min-height: 190px;
+  }
+  .service-card .card-body{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 6px;
+  }
+  .service-card .card-text{
+    margin-top: 0;
   }
   .room-card-body{
     display: flex;
@@ -121,6 +217,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   height: 50vh;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
 }
 
 .header {
@@ -129,6 +228,8 @@ body {
   background-size: cover;
   background-image: url("./assets/images/images.jpg");
   background-position: center center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 .header-title {
   color: #fff;
@@ -209,7 +310,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(110deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.2) 100%);
   }
   .overlay-content {
     position: absolute;
@@ -218,6 +319,10 @@ body {
      transform: translate(-50%, -50%);
     color: #fff;
     justify-content: flex-start;
+    padding: 22px 26px;
+    border-radius: var(--radius-lg);
+    background-color: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(4px);
   }
 
 /* The header banner */
@@ -227,6 +332,8 @@ body {
   background-position: center;
    position: relative;
   height: 80vh;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
  }
 
 @media only screen and (max-width: 768px) {
@@ -259,23 +366,23 @@ body {
 }
 
 .booking-card{
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-card);
 }
 .booking-card .card-title{
   font-weight: 600;
-  color: #4a4a4a;
+  color: var(--color-text);
 }
 .booking-card .form-label{
   font-size: 0.9rem;
-  color: #6c757d;
+  color: var(--color-muted);
 }
 .booking-card .form-control{
   border-radius: 6px;
 }
 .booking-fieldset{
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 12px 14px 8px;
   margin-bottom: 14px;
@@ -286,7 +393,7 @@ body {
   padding: 0 6px;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #6c757d;
+  color: var(--color-muted);
 }
 .summary-list{
   list-style: none;
@@ -298,19 +405,19 @@ body {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 6px;
-  color: #444;
+  color: var(--color-text);
 }
 .summary-label{
-  color: #6c757d;
+  color: var(--color-muted);
 }
 .section-title{
   font-size: 1rem;
   font-weight: 600;
-  color: #4a4a4a;
+  color: var(--color-text);
   margin-bottom: 8px;
 }
 .summary-total{
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-border);
   padding-top: 10px;
   margin-top: 10px;
   font-size: 1.05rem;
@@ -321,7 +428,51 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: var(--color-surface);
   height: 60px;
   text-align: center;
+}
+
+.form-control,
+.form-select,
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb), 0.2);
+}
+
+.dropdown-menu {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.dropdown-item {
+  color: var(--color-text);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.theme-toggle {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--color-surface-muted);
+  border-color: var(--color-primary);
+  color: var(--color-text);
 }

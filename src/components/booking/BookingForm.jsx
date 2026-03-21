@@ -32,15 +32,29 @@ const BookingForm = () => {
 
     useEffect(() => {
         getRoomById(roomId)
-            .then((data) => setRoomPrice(data.roomPrice))
+            .then((data) => {
+                const price = Number(data.roomPrice)
+                setRoomPrice(Number.isFinite(price) ? price : 0)
+            })
             .catch((error) => console.error(error))
     }, [roomId])
 
+    const parseFormDate = (value) => moment(value, "YYYY-MM-DD", true)
+
     const calculatePayment = () => {
-        const checkIn  = moment(booking.checkInDate)
-        const checkOut = moment(booking.checkOutDate)
+        const checkIn  = parseFormDate(booking.checkInDate)
+        const checkOut = parseFormDate(booking.checkOutDate)
+        if (!checkIn.isValid() || !checkOut.isValid()) {
+            return 0
+        }
         const days     = checkOut.diff(checkIn, "days")
-        return days > 0 ? days * roomPrice : 0
+        if (days <= 0) {
+            return 0
+        }
+        if (!Number.isFinite(roomPrice) || roomPrice <= 0) {
+            return 0
+        }
+        return days * roomPrice
     }
 
     const today = moment().format("YYYY-MM-DD")
@@ -52,7 +66,9 @@ const BookingForm = () => {
     }
 
     const isCheckOutDateValid = () => {
-        if (!moment(booking.checkOutDate).isAfter(moment(booking.checkInDate))) {
+        const checkIn = parseFormDate(booking.checkInDate)
+        const checkOut = parseFormDate(booking.checkOutDate)
+        if (!checkIn.isValid() || !checkOut.isValid() || !checkOut.isAfter(checkIn, "day")) {
             setErrorMessage("Check-out date must come after Check-in date")
             return false
         }

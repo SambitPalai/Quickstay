@@ -25,4 +25,6 @@ public interface IRoomService {
 	Room addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice, String roomNo ) throws IOException;
 	Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, String roomNo, byte[] photoBytes);
 
+	List<Room> getAllRoomsWithBookings();
+
 }

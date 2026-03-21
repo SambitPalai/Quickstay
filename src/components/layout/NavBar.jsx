@@ -1,13 +1,35 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useAuth } from "../auth/AuthContext"
+import { FaMoon, FaSun } from "react-icons/fa"
 
 const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false)
+    const THEME_STORAGE_KEY = "quickstay-theme"
+    const getInitialTheme = () => {
+        if (typeof window === "undefined") {
+            return "light"
+        }
+        const stored = localStorage.getItem(THEME_STORAGE_KEY)
+        if (stored === "dark" || stored === "light") {
+            return stored
+        }
+        return window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"
+    }
+    const [theme, setTheme] = useState(getInitialTheme)
     const { isLoggedIn,isOwner , isAdmin, logout, user } = useAuth()
     const navigate = useNavigate()
 
     const handleAccountClick = () => setShowAccount(!showAccount)
+    const toggleTheme = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"))
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme)
+        localStorage.setItem(THEME_STORAGE_KEY, theme)
+    }, [theme])
 
     const handleLogout = () => {
         logout()
@@ -50,6 +72,26 @@ const NavBar = () => {
                     </ul>
 
                     <ul className="navbar-nav ms-auto d-flex align-items-lg-center gap-lg-3">
+                        <li className="nav-item no-underline">
+                            <button
+                                className="theme-toggle"
+                                type="button"
+                                onClick={toggleTheme}
+                                aria-label="Toggle dark mode"
+                            >
+                                {theme === "dark" ? (
+                                    <>
+                                        <FaSun className="me-1" />
+                                        Light
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaMoon className="me-1" />
+                                        Dark
+                                    </>
+                                )}
+                            </button>
+                        </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/find-booking">
                                 Find my booking

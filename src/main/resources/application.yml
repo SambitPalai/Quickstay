@@ -1,30 +1,35 @@
 server:
- port: 9192
- #ssl:
-  #enabled: false
-  #key-store: classpath:keystore-new.p12
-  #key-store-password: BoogyMan
-  #key-store-type: PKCS12
-  #skey-alias: springboot
+  port: 9192
+  # ssl:
+  #   enabled: false
+  #   key-store: classpath:keystore-new.p12
+  #   key-store-password: BoogyMan
+  #   key-store-type: PKCS12
+  #   key-alias: springboot
+
 spring:
- datasource: 
-  username: root
-  password: root
-  url: jdbc:mysql://localhost:3306/quickstay_db
-  driver-class-name: com.mysql.cj.jdbc.Driver
- jpa:
-  show-sql: true
-  hibernate:
-   ddl-auto: update
-   format_sql: true
- servlet:
-  multipart:
-   max-file-size: 5MB
-   max-request-size: 5MB
-   file-size-threshold: 2KB  			
-   # ---- JWT Configuration ------------
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/quickstay_db
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      file-size-threshold: 2KB
+  jackson:
+    date-format: yyyy-MM-dd
+    serialization:
+      write-dates-as-timestamps: false
+
 application:
- security:
-  jwt:
-   secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-   expiration: 86400000        # 24 hours in milliseconds
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000    # 24 hours in milliseconds 

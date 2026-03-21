@@ -37,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 public class RoomController  {
 	
 	private final IRoomService roomService;
-	private final BookingService bookingService;
 	
 	@PostMapping("/add/new-room")
 	public ResponseEntity<RoomResponse> addNewRoom(
@@ -59,7 +58,7 @@ public class RoomController  {
 	
 	@GetMapping("/all-rooms")
 	public ResponseEntity<List<RoomResponse>> getAllRooms() throws PhotoRetrievalException {
-	    List<Room> rooms = roomService.getAllRooms();
+	    List<Room> rooms = roomService.getAllRoomsWithBookings();
 	    List<RoomResponse> roomResponses = new ArrayList<>();
 	    for (Room room : rooms) {
 	        RoomResponse roomResponse = getRoomResponse(room);
@@ -99,16 +98,16 @@ public class RoomController  {
 	}
 	
 	private RoomResponse getRoomResponse(Room room) {
-		List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
+		List<BookedRoom> bookings =  room.getBookings();
 		
 		if (bookings == null) {
 			bookings = new ArrayList<>();
 		}
 		
 		
-		List<BookingResponse> bookingInfo = bookings
-				.stream()
-				.map(booking -> new BookingResponse(booking.getBookingId(), 
+		List<BookingResponse> bookingInfo = bookings.stream()
+				.map(booking -> new BookingResponse(
+						booking.getBookingId(), 
 						booking.getCheckInDate(), 
 						booking.getCheckOutDate(), 
 						booking.getGuestFullName(),        
@@ -129,8 +128,5 @@ public class RoomController  {
 								bookingInfo);
 	}
 
-	private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
-		return bookingService.getAllBookingsByRoomId(roomId);
-	}
 	
 }

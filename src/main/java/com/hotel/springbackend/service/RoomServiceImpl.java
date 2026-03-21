@@ -12,6 +12,7 @@ import com.hotel.springbackend.exception.ResourceNotFoundException;
 import com.hotel.springbackend.model.Room;
 import com.hotel.springbackend.repository.RoomRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -65,6 +66,7 @@ public class RoomServiceImpl implements IRoomService{
 	}
 	
 	@Override
+	@Transactional
 	public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, String roomNo, byte[] photoBytes) {
 		Room room = roomRepository.findById(roomId)
 				.orElseThrow(() -> new ResourceNotFoundException("Room not found"));
@@ -78,8 +80,14 @@ public class RoomServiceImpl implements IRoomService{
 	}
 
 	@Override
+	@Transactional
 	public Optional<Room> getRoomById(Long roomId) {
 		return roomRepository.findById(roomId);
+	}
+
+	@Override
+	public List<Room> getAllRoomsWithBookings() {
+		return roomRepository.findAllWithBookings();
 	}
 
 
