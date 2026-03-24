@@ -4,6 +4,22 @@ export const api = axios.create({
     baseURL :"http://localhost:9192"
 })
 
+const getApiErrorMessage = (error, fallbackMessage) => {
+    const data = error?.response?.data
+    if (typeof data === "string") {
+        return data
+    }
+    if (data && typeof data === "object") {
+        if (typeof data.message === "string") return data.message
+        if (typeof data.error === "string") return data.error
+        if (typeof data.details === "string") return data.details
+    }
+    if (typeof error?.message === "string" && error.message) {
+        return error.message
+    }
+    return fallbackMessage
+}
+
 // ------------ Attach JWT token to every request automatically ------------
 
 api.interceptors.request.use((config) => {
@@ -22,7 +38,7 @@ export async function registerUser(userData) {
         const response = await api.post("/auth/register", userData)
         return response.data
     } catch (error) {
-        throw new Error(error.response?.data || "Registration failed")
+        throw new Error(getApiErrorMessage(error, "Registration failed"))
     }
 }
 
@@ -32,7 +48,7 @@ export async function loginUser(credentials) {
         const response = await api.post("/auth/login", credentials)
         return response.data   // { token, email, role, name }
     } catch (error) {
-        throw new Error(error.response?.data || "Login failed")
+        throw new Error(getApiErrorMessage(error, "Login failed"))
     }
 }
 

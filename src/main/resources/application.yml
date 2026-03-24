@@ -27,7 +27,18 @@ spring:
     date-format: yyyy-MM-dd
     serialization:
       write-dates-as-timestamps: false
-
+  mail:                                      
+    host: smtp.gmail.com
+    port: 587
+    username: 1forprojectnoreplyt@gmail.com
+    password: ForProjectPurposeOnly@2026
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true  
 application:
   security:
     jwt:
