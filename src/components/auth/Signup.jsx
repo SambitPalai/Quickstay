@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { Form, FormControl, Button } from "react-bootstrap"
+import { Form, FormControl, Button, InputGroup } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { registerUser } from "../utils/ApiFunctions"
 import { useAuth } from "./AuthContext"
 import Header from "../common/Header"
+import { FiEye, FiEyeOff } from "react-icons/fi"
 
 const Signup = () => {
     const [form, setForm] = useState({
@@ -15,6 +16,8 @@ const Signup = () => {
     const [errorMessage,   setErrorMessage]   = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const [isLoading,      setIsLoading]      = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const { login } = useAuth()
     const navigate  = useNavigate()
@@ -95,27 +98,47 @@ const Signup = () => {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label htmlFor="password">Password</Form.Label>
-                            <FormControl
-                                required
-                                type="password"
-                                id="password"
-                                name="password"
-                                value={form.password}
-                                placeholder="Create a password"
-                                onChange={handleChange}
-                            />
+                            <InputGroup>
+                                <FormControl
+                                    required
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    name="password"
+                                    value={form.password}
+                                    placeholder="Create a password"
+                                    onChange={handleChange}
+                                />
+                                <Button
+                                    type="button"
+                                    variant="outline-secondary"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                >
+                                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                                </Button>
+                            </InputGroup>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
-                            <FormControl
-                                required
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                value={form.confirmPassword}
-                                placeholder="Re-enter your password"
-                                onChange={handleChange}
-                            />
+                            <InputGroup>
+                                <FormControl
+                                    required
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    value={form.confirmPassword}
+                                    placeholder="Re-enter your password"
+                                    onChange={handleChange}
+                                />
+                                <Button
+                                    type="button"
+                                    variant="outline-secondary"
+                                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                    aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                >
+                                    {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                                </Button>
+                            </InputGroup>
                         </Form.Group>
                         <div className="d-flex align-items-center justify-content-between">
                             <Button type="submit" className="btn btn-hotel" disabled={isLoading}>

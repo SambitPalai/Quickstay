@@ -71,6 +71,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/rooms/room/types").permitAll()
                 .requestMatchers(HttpMethod.GET, "/rooms/room/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/bookings/confirmation/**").permitAll()
+                .requestMatchers("/auth/forgot-password").permitAll()
+                .requestMatchers("/auth/verify-otp").permitAll()
+                .requestMatchers("/auth/reset-password").permitAll()
                 // ---- OWNER ONLY ----------
                 .requestMatchers("/auth/create-admin").hasRole("OWNER")
                 .requestMatchers("/auth/delete-admin/**").hasRole("OWNER")
@@ -83,7 +86,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/rooms/delete/**").hasAnyRole("ADMIN","OWNER")
                 .requestMatchers(HttpMethod.GET,    "/bookings/all-bookings").hasAnyRole("ADMIN","OWNER")
                 .requestMatchers(HttpMethod.GET,    "/bookings/user/bookings").hasAnyRole("ADMIN", "OWNER")
-                // ------- AUNTHENTICATED USERS--------
+                // ------- AUNTHENTICATED USERS -------
                 .requestMatchers("/bookings/my-bookings").authenticated()
                 .requestMatchers("/bookings/user/**").authenticated()
                 .requestMatchers("/bookings/room/**").authenticated()

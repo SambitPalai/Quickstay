@@ -1,11 +1,16 @@
 package com.hotel.springbackend.controller;
 
+import com.hotel.springbackend.exception.InvalidBookingRequestException;
+import com.hotel.springbackend.exception.ResourceNotFoundException;
 import com.hotel.springbackend.model.User;
 import com.hotel.springbackend.repository.UserRepository;
 import com.hotel.springbackend.request.LoginRequest;
 import com.hotel.springbackend.request.RegisterRequest;
 import com.hotel.springbackend.response.AuthResponse;
 import com.hotel.springbackend.security.JwtService;
+import com.hotel.springbackend.service.EmailService;
+import com.hotel.springbackend.service.OtpService;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
@@ -25,6 +30,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
+	private final OtpService otpService;
+	private final EmailService emailService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -125,6 +132,60 @@ public class AuthController {
         return ResponseEntity.ok(body);
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+
+        if (userRepository.existsByEmail(email)) {
+            String otp = otpService.generateOtp(email);
+            try {
+            	emailService.sendOtpEmail(email, otp);
+			} catch (Exception e) {
+				System.out.println("Email Failed: "+ e.getMessage());
+			}
+        }
+
+        return ResponseEntity.ok("If an account exists, OTP has been sent.");
+    }
+    
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody Map<String, String> request) {
+        try {
+            otpService.verifyOtp(request.get("email"), request.get("otp"));
+            return ResponseEntity.ok("OTP verified.");
+        } catch (Exception e) {
+            throw new InvalidBookingRequestException(e.getMessage());
+        }
+    }
+    
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
+
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+        String confirmPassword = request.get("confirmPassword");
+
+        if (!newPassword.equals(confirmPassword)) {
+            throw new InvalidBookingRequestException("Passwords do not match.");
+        }
+
+        if (newPassword.length() < 6) {
+            throw new InvalidBookingRequestException("Password must be at least 6 characters.");
+        }
+
+        otpService.ensureVerified(email);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        otpService.markUsed(email);
+
+        return ResponseEntity.ok("Password reset successful.");
+    }
+    
     private Map<String, Object> response(String key, String value) {
         Map<String, Object> map = new HashMap<>();
         map.put(key, value);

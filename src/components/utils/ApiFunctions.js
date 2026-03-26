@@ -52,6 +52,40 @@ export async function loginUser(credentials) {
     }
 }
 
+/* Request OTP for password reset */
+export async function forgotPassword(email) {
+    try {
+        const response = await api.post("/auth/forgot-password", { email })
+        return response.data
+    } catch (error) {
+        throw new Error(getApiErrorMessage(error, "Failed to send OTP"))
+    }
+}
+
+/* Verify OTP for password reset */
+export async function verifyOtp(email, otp) {
+    try {
+        const response = await api.post("/auth/verify-otp", { email, otp })
+        return response.data
+    } catch (error) {
+        throw new Error(getApiErrorMessage(error, "OTP verification failed"))
+    }
+}
+
+/* Reset password after OTP verification */
+export async function resetPassword(email, newPassword, confirmPassword) {
+    try {
+        const response = await api.post("/auth/reset-password", {
+            email,
+            newPassword,
+            confirmPassword
+        })
+        return response.data
+    } catch (error) {
+        throw new Error(getApiErrorMessage(error, "Password reset failed"))
+    }
+}
+
 // ------- Room Functions -------------------- 
 
 /* This function adds a new room to the database  */
